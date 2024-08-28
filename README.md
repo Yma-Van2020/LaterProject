@@ -35,21 +35,19 @@ The Link Parameter Appender is a web application that allows users to append que
 
 ## Installation
 
-### Backend Setup
-
 1. **Clone the repository:**
 
    ```bash
 
-   git clone https://github.com/your-username/link-parameter-appender.git
+   git clone https://github.com/Yma-Van2020/LaterProject.git
 
    ```
 
-2. **Navigate to the backend directory:**
+2. **Navigate to the directory:**
 
    ```bash
 
-   cd link-parameter-appender/backend
+   cd LaterProject
 
    ```
 
@@ -63,11 +61,11 @@ The Link Parameter Appender is a web application that allows users to append que
 
 4. **Set up environment variables:**
 
-   Create a `.env` file in the `backend` directory and add your database configuration:
+   Create a `.env` file in the directory and add your database configuration:
 
    ```
 
-   DATABASE_URL=your_database_url
+   DATABASE_URL="file:./dev.db"
 
    ```
 
