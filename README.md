@@ -1,5 +1,7 @@
 # Link Parameter Appender
 
+Time to complete: 2 hours.
+
 ## Overview
 
 The Link Parameter Appender is a web application that allows users to append query parameters to URLs and save these URLs for future reference. Users can input a base URL and parameters in JSON format, which will be appended to the URL, and the resulting URL will be saved in a database. The application also supports viewing and paginating through the saved URLs.
