@@ -21,7 +21,7 @@ export const createLink = async (url: string, parameters: object, newUrl: string
     });
     return link;
   } catch (error: any) {
-    throw new Error('Failed to create link:22 ' + error.message);
+    throw new Error('Failed to create link: ' + error.message);
   }
 };
 
