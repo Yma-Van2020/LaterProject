@@ -39,8 +39,11 @@ The Link Parameter Appender is a web application that allows users to append que
 
    * check if the string is a URL.
    
-   * options is an object which defaults to { protocols: ['http','https','ftp'], require_tld: true, require_protocol: false, require_host: true, require_port: false, require_valid_protocol: true, allow_underscores: false, host_whitelist: false, host_blacklist: false, allow_trailing_dot: false, allow_protocol_relative_urls: false, allow_fragments: true, allow_query_components: true, disallow_auth: false, validate_length: true }.
-   
+   * options is an object which defaults to
+     
+    ```bash
+    { protocols: ['http','https','ftp'], require_tld: true, require_protocol: false, require_host: true, require_port: false, require_valid_protocol: true, allow_underscores: false, host_whitelist: false, host_blacklist: false, allow_trailing_dot: false, allow_protocol_relative_urls: false, allow_fragments: true, allow_query_components: true, disallow_auth: false, validate_length: true }.
+    ```
    * require_protocol - if set to true isURL will return false if protocol is not present in the URL.
    * require_valid_protocol - isURL will check if the URL's protocol is present in the protocols option.
    * protocols - valid protocols can be modified with this option.
