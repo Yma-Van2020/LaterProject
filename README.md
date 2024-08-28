@@ -61,11 +61,11 @@ The Link Parameter Appender is a web application that allows users to append que
 
 4. **Set up environment variables:**
 
-   Create a `.env` file in the `backend` directory and add your database configuration:
+   Create a `.env` file in the directory and add your database configuration:
 
    ```
 
-   DATABASE_URL=your_database_url
+   DATABASE_URL="file:./dev.db"
 
    ```
 
