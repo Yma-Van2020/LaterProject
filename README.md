@@ -203,7 +203,7 @@ Retrieves a list of saved links with pagination support.
 
    - Enter the base URL (e.g., `https://example.com`) in the "URL" field.
 
-   - Input the query parameters in JSON format (e.g., `{"aaa": "bbb"}`) in the "Parameters" field.
+   - Input the query parameters in JSON format (e.g., `{"aaa": "bbb"} or {"aaa": "bbb", "ccc": "ddd}`) in the "Parameters" field.
 
    - Click "Submit" to create a new URL with appended parameters.
 
