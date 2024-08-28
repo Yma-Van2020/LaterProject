@@ -1,5 +1,3 @@
-Here's the updated README file with the additional details on pagination, parameter examples, website example, and error messages:
-
 # Link Parameter Appender
 
 ## Overview
