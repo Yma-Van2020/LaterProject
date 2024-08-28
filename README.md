@@ -34,6 +34,22 @@ The Link Parameter Appender is a web application that allows users to append que
 - **Database:** SQLlite with Prisma ORM
 
 - **Validation:** Custom validation functions for URL and parameters
+- used a library of string validators and sanitizers.
+- https://www.npmjs.com/package/validator: `.isURL`(str [, options])
+
+   * check if the string is a URL.
+   
+   * options is an object which defaults to { protocols: ['http','https','ftp'], require_tld: true, require_protocol: false, require_host: true, require_port: false, require_valid_protocol: true, allow_underscores: false, host_whitelist: false, host_blacklist: false, allow_trailing_dot: false, allow_protocol_relative_urls: false, allow_fragments: true, allow_query_components: true, disallow_auth: false, validate_length: true }.
+   
+   * require_protocol - if set to true isURL will return false if protocol is not present in the URL.
+   * require_valid_protocol - isURL will check if the URL's protocol is present in the protocols option.
+   * protocols - valid protocols can be modified with this option.
+   * require_host - if set to false isURL will not check if host is present in the URL.
+   * require_port - if set to true isURL will check if port is present in the URL.
+   * allow_protocol_relative_urls - if set to true protocol relative URLs will be allowed.
+   * allow_fragments - if set to false isURL will return false if fragments are present.
+   * allow_query_components - if set to false isURL will return false if query components are present.
+   * validate_length - if set to false isURL will skip string length validation (2083 characters is IE max URL length).
 
 ## Installation
 
