@@ -15,13 +15,13 @@ The Link Parameter Appender is a web application that allows users to append que
 
 - Display the newly created URL and its components.
 
-- Save URLs with their parameters to a PostgreSQL database.
+- Save URLs with their parameters to a SQLlite database.
 
 - View saved URLs with pagination support.
 
 - Clear form inputs and result display.
 
-- Display error messages for invalid URL and parameters.
+- Display error messages for invalid URL OR parameters.
 
 ## Technologies Used
 
@@ -29,7 +29,7 @@ The Link Parameter Appender is a web application that allows users to append que
 
 - **Backend:** Node.js, Express.js
 
-- **Database:** PostgreSQL with Prisma ORM
+- **Database:** SQLlite with Prisma ORM
 
 - **Validation:** Custom validation functions for URL and parameters
 
@@ -87,32 +87,6 @@ The Link Parameter Appender is a web application that allows users to append que
 
    ```
 
-### Frontend Setup
-
-1. **Navigate to the frontend directory:**
-
-   ```bash
-
-   cd link-parameter-appender/frontend
-
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-
-   npm install
-
-   ```
-
-3. **Start the development server:**
-
-   ```bash
-
-   npm start
-
-   ```
-
 ## API Endpoints
 
 ### `POST /api/append-parameters`
@@ -129,7 +103,7 @@ Appends parameters to a URL and saves the result.
 
   "parameters": {
 
-    "aa": "bb"
+    "aaa": "bbb"
 
   }
 
@@ -147,7 +121,7 @@ Appends parameters to a URL and saves the result.
 
   "parameters": {
 
-    "aa": "bb"
+    "aaa": "bbb"
 
   },
 
