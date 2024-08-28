@@ -165,13 +165,7 @@ Retrieves a list of saved links with pagination support.
 
 ```json
 
-{
-
-  "currentPage": 1,
-
-  "totalPages": 3,
-
-  "links": [
+[
 
     {
 
@@ -191,9 +185,7 @@ Retrieves a list of saved links with pagination support.
 
     // More links...
 
-  ]
-
-}
+]
 
 ```
 
