@@ -6,9 +6,10 @@ Here's the updated README file with the additional details on pagination, parame
 
 The Link Parameter Appender is a web application that allows users to append query parameters to URLs and save these URLs for future reference. Users can input a base URL and parameters in JSON format, which will be appended to the URL, and the resulting URL will be saved in a database. The application also supports viewing and paginating through the saved URLs.
 
-![Uploading Screenshot 2024-08-27 at 6.08.12 PM.png…]()
+![Screenshot 2024-08-27 at 6 08 12 PM](https://github.com/user-attachments/assets/26a99874-99f9-44df-9642-73a7700d3271)
 
-![Uploading Screenshot 2024-08-27 at 6.08.19 PM.png…]()
+![Screenshot 2024-08-27 at 6 08 19 PM](https://github.com/user-attachments/assets/e645941c-331b-46e2-835e-971fe2b53972)
+
 
 ## Features
 
