@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Parameters</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="header-container">
+    <img class="o--header__avatar" data-test-id="avatar" src="https://image-cdn.later.com/linkinbio_attachments/avatar/uploads-d826aef8-0acc-d490-df3a-74838e13e745/thumb_md.jpg" alt="Later's avatar">
+    <h1>Link Parameter Appender</h1>
+  </div>
+  <form id="linkForm">
+    <label for="url">URL:</label>
+    <input type="text" id="url" name="url" required><br><br>
+
+    <label for="parameters">Parameters (JSON):</label>
+    <textarea id="parameters" name="parameters" required></textarea><br><br>
+    <button type="submit">Submit</button>
+    <button type="button" id="clearForm" class="clear-button">Clear Form</button>
+  </form>
+
+  <div id="error" class="error" style="color: red; display: none;"></div>
+
+  <h2>Result</h2>
+  <div id="result" class="result"></div>
+
+  <h2>Saved Links</h2>
+  <div id="links" class="links"></div>
+  
+  <!-- Pagination Controls -->
+  <div id="pagination" class="pagination">
+    <button id="prevPage" class="pagination-button">Previous</button>
+    <span id="pageInfo"></span>
+    <button id="nextPage" class="pagination-button">Next</button>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const linksPerPage = 5;
+
+    // Handle form submission to add a new link
+    document.getElementById('linkForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      
+      const url = document.getElementById('url').value;
+      const parameters = document.getElementById('parameters').value;
+
+      // Reset error display
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('error').innerText = '';
+
+      try {
+        JSON.parse(parameters); // Validate JSON format
+
+        const response = await fetch('/api/append-parameters', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ url, parameters: JSON.parse(parameters) }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        document.getElementById('result').innerHTML = `
+          <p><strong>Original URL:</strong> ${result.original}</p>
+          <p><strong>Parameters:</strong> ${JSON.stringify(result.parameters)}</p>
+          <p><strong>New URL:</strong> <a href="${result.newUrl}" target="_blank">${result.newUrl}</a></p>
+        `;
+
+        // Refresh the list of saved links
+        fetchLinks();
+      } catch (error) {
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').innerText = `Error: ${error.message}`;
+      }
+    });
+
+    // Function to fetch and display saved links
+    const fetchLinks = async () => {
+      try {
+        const response = await fetch('/api/links');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const links = await response.json();
+        console.log('Fetched links:', links); // Log the fetched links
+
+        // Paginate links
+        const paginatedLinks = paginate(links, currentPage, linksPerPage);
+
+        const linksContainer = document.getElementById('links');
+        linksContainer.innerHTML = ''; // Clear existing content
+
+        paginatedLinks.items.forEach(link => {
+          const linkElement = document.createElement('div');
+          linkElement.className = 'link-item';
+          linkElement.innerHTML = `
+            <p><strong>Original URL:</strong> ${link.original}</p>
+            <p><strong>Parameters:</strong> ${JSON.stringify(link.parameters)}</p>
+            <p><strong>New URL:</strong> <a href="${link.newUrl}" target="_blank">${link.newUrl}</a></p>
+            <hr>
+          `;
+          linksContainer.appendChild(linkElement);
+        });
+
+        // Update pagination info
+        document.getElementById('pageInfo').innerText = `Page ${currentPage} of ${Math.ceil(links.length / linksPerPage)}`;
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = currentPage === Math.ceil(links.length / linksPerPage);
+      } catch (error) {
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').innerText = `Error: ${error.message}`;
+        console.error('Error fetching links:', error);
+      }
+    };
+
+    // Paginate function
+    const paginate = (items, pageNumber, itemsPerPage) => {
+      const start = (pageNumber - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      return {
+        items: items.slice(start, end),
+        totalPages: Math.ceil(items.length / itemsPerPage)
+      };
+    };
+
+    // Pagination controls
+    document.getElementById('prevPage').addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        fetchLinks();
+      }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', () => {
+      currentPage++;
+      fetchLinks();
+    });
+
+    // Clear form fields
+    document.getElementById('clearForm').addEventListener('click', () => {
+      document.getElementById('url').value = '';
+      document.getElementById('parameters').value = '';
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('error').style.display = 'none'; // Hide error message
+    });
+
+    // Fetch and display links on page load
+    fetchLinks();
+  </script>
+</body>
+</html>
