@@ -1,12 +1,13 @@
-Here's the updated README file with the additional details on pagination, parameter examples, website example, and error messages:
-
-```markdown
-
 # Link Parameter Appender
 
 ## Overview
 
 The Link Parameter Appender is a web application that allows users to append query parameters to URLs and save these URLs for future reference. Users can input a base URL and parameters in JSON format, which will be appended to the URL, and the resulting URL will be saved in a database. The application also supports viewing and paginating through the saved URLs.
+
+![Screenshot 2024-08-27 at 6 08 12 PM](https://github.com/user-attachments/assets/26a99874-99f9-44df-9642-73a7700d3271)
+
+![Screenshot 2024-08-27 at 6 08 19 PM](https://github.com/user-attachments/assets/e645941c-331b-46e2-835e-971fe2b53972)
+
 
 ## Features
 
@@ -14,13 +15,13 @@ The Link Parameter Appender is a web application that allows users to append que
 
 - Display the newly created URL and its components.
 
-- Save URLs with their parameters to a PostgreSQL database.
+- Save URLs with their parameters to a SQLlite database.
 
 - View saved URLs with pagination support.
 
 - Clear form inputs and result display.
 
-- Display error messages for invalid URL and parameters.
+- Display error messages for invalid URL OR parameters.
 
 ## Technologies Used
 
@@ -28,27 +29,25 @@ The Link Parameter Appender is a web application that allows users to append que
 
 - **Backend:** Node.js, Express.js
 
-- **Database:** PostgreSQL with Prisma ORM
+- **Database:** SQLlite with Prisma ORM
 
 - **Validation:** Custom validation functions for URL and parameters
 
 ## Installation
 
-### Backend Setup
-
 1. **Clone the repository:**
 
    ```bash
 
-   git clone https://github.com/your-username/link-parameter-appender.git
+   git clone https://github.com/Yma-Van2020/LaterProject.git
 
    ```
 
-2. **Navigate to the backend directory:**
+2. **Navigate to the directory:**
 
    ```bash
 
-   cd link-parameter-appender/backend
+   cd LaterProject
 
    ```
 
@@ -62,11 +61,11 @@ The Link Parameter Appender is a web application that allows users to append que
 
 4. **Set up environment variables:**
 
-   Create a `.env` file in the `backend` directory and add your database configuration:
+   Create a `.env` file in the directory and add your database configuration:
 
    ```
 
-   DATABASE_URL=your_database_url
+   DATABASE_URL="file:./dev.db"
 
    ```
 
@@ -79,32 +78,6 @@ The Link Parameter Appender is a web application that allows users to append que
    ```
 
 6. **Start the server:**
-
-   ```bash
-
-   npm start
-
-   ```
-
-### Frontend Setup
-
-1. **Navigate to the frontend directory:**
-
-   ```bash
-
-   cd link-parameter-appender/frontend
-
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-
-   npm install
-
-   ```
-
-3. **Start the development server:**
 
    ```bash
 
@@ -128,7 +101,7 @@ Appends parameters to a URL and saves the result.
 
   "parameters": {
 
-    "aa": "bb"
+    "aaa": "bbb"
 
   }
 
@@ -146,7 +119,7 @@ Appends parameters to a URL and saves the result.
 
   "parameters": {
 
-    "aa": "bb"
+    "aaa": "bbb"
 
   },
 
