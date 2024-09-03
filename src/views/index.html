@@ -80,7 +80,7 @@
         fetchLinks(currentPage); // Ensure to pass currentPage if needed
       } catch (error) {
         document.getElementById('error').style.display = 'block';
-        document.getElementById('error').innerText = `Invalid parameters. Ensure parameters is a valid JSON object.`;
+        document.getElementById('error').innerText = `Error: ${error.message}`;
       }
     });
 
