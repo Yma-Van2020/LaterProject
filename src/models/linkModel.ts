@@ -26,17 +26,29 @@ export const createLink = async (url: string, parameters: object, newUrl: string
 };
 
 /**
- * Retrieves all link entries from the database.
- * @returns An array of link objects.
+ * Retrieves paginated link entries from the database.
+ * @param page - The page number to retrieve.
+ * @param limit - The number of items per page.
+ * @returns A paginated array of link objects.
  */
-export const getAllLinks = async () => {
+export const getPaginatedLinks = async (page: number, limit: number) => {
   try {
-    const links = await prisma.link.findMany();
-    return links.map((link: { parameters: string; }) => ({
+    const skip = (page - 1) * limit;
+    
+    const [links, total] = await Promise.all([
+      prisma.link.findMany({
+        skip,
+        take: limit,
+      }),
+      prisma.link.count(),
+    ]);
+    
+    return { links: links.map((link: { parameters: string; }) => ({
       ...link,
       parameters: JSON.parse(link.parameters) // Deserialize the parameters
-    }));
+    })), total, page, limit };
   } catch (error: any) {
     throw new Error('Failed to retrieve links: ' + error.message);
   }
 };
+

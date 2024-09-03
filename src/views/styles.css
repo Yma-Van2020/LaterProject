@@ -126,6 +126,7 @@ h2 {
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-bottom: 10px;
+  overflow-y: scroll;
 }
 
 .link-item p {
@@ -175,9 +176,54 @@ h2 {
 .error-message {
   color: #ff0000; /* Red color for error messages */
   font-size: 16px;
-  margin-top: 20px;
+  margin: 10px 0;
   padding: 10px;
   background-color: #f8d7da; /* Light red background */
   border: 1px solid #f5c6cb; /* Border color */
   border-radius: 4px;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .o--header__avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  form {
+    padding: 15px;
+  }
+
+  input[type="text"], textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-right: 5px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  #result, .links, .link-item {
+    max-width: 100%;
+  }
+
+  #pageInfo {
+    font-size: 14px;
+  }
 }

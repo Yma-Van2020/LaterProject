@@ -17,7 +17,7 @@
 
     <label for="parameters">Parameters (JSON):</label>
     <textarea id="parameters" name="parameters" required></textarea>
-    <div id="error" class="error" style="color: red; display: flex; justify-content: center;"></div>
+    <div id="error" class="error-message"></div>
     
     <button type="submit">Submit</button>
     <button type="button" id="clearForm" class="clear-button">Clear Form</button>
@@ -39,7 +39,11 @@
   <script>
     let currentPage = 1;
     const linksPerPage = 5;
-
+    
+    // Initially, error message should be hidden
+    document.getElementById('error').style.display = 'none';
+    document.getElementById('error').innerText = '';
+    
     // Handle form submission to add a new link
     document.getElementById('linkForm').addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -52,9 +56,7 @@
       document.getElementById('error').innerText = '';
 
       try {
-        JSON.parse(parameters); // Validate JSON format
-
-        const response = await fetch('/api/append-parameters', {
+          const response = await fetch('/api/append-parameters', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -63,7 +65,8 @@
         });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Network response was not ok');
         }
 
         const result = await response.json();
@@ -74,31 +77,31 @@
         `;
 
         // Refresh the list of saved links
-        fetchLinks();
+        fetchLinks(currentPage); // Ensure to pass currentPage if needed
       } catch (error) {
         document.getElementById('error').style.display = 'block';
-        document.getElementById('error').innerText = `Error: ${error.message}`;
+        document.getElementById('error').innerText = `Invalid parameters. Ensure parameters is a valid JSON object.`;
       }
     });
 
     // Function to fetch and display saved links
-    const fetchLinks = async () => {
+    const fetchLinks = async (page = 1) => {
       try {
-        const response = await fetch('/api/links');
+        const response = await fetch(`/api/links?page=${page}&limit=${linksPerPage}`);
+
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Network response was not ok');
         }
-
-        const links = await response.json();
-        console.log('Fetched links:', links); // Log the fetched links
-
-        // Paginate links
-        const paginatedLinks = paginate(links, currentPage, linksPerPage);
-
+    
+        const data = await response.json();
+        const { links, total, page: currentPage, limit } = data;
+    
+        // Update links container
         const linksContainer = document.getElementById('links');
         linksContainer.innerHTML = ''; // Clear existing content
-
-        paginatedLinks.items.forEach(link => {
+    
+        links.forEach(link => {
           const linkElement = document.createElement('div');
           linkElement.className = 'link-item';
           linkElement.innerHTML = `
@@ -111,9 +114,10 @@
         });
 
         // Update pagination info
-        document.getElementById('pageInfo').innerText = `Page ${currentPage} of ${Math.ceil(links.length / linksPerPage)}`;
+        const totalPages = Math.ceil(total / limit);
+        document.getElementById('pageInfo').innerText = `Page ${currentPage} of ${totalPages}`;
         document.getElementById('prevPage').disabled = currentPage === 1;
-        document.getElementById('nextPage').disabled = currentPage === Math.ceil(links.length / linksPerPage);
+        document.getElementById('nextPage').disabled = currentPage === totalPages;
       } catch (error) {
         document.getElementById('error').style.display = 'block';
         document.getElementById('error').innerText = `Error: ${error.message}`;
@@ -121,27 +125,17 @@
       }
     };
 
-    // Paginate function
-    const paginate = (items, pageNumber, itemsPerPage) => {
-      const start = (pageNumber - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      return {
-        items: items.slice(start, end),
-        totalPages: Math.ceil(items.length / itemsPerPage)
-      };
-    };
-
     // Pagination controls
     document.getElementById('prevPage').addEventListener('click', () => {
       if (currentPage > 1) {
         currentPage--;
-        fetchLinks();
+        fetchLinks(currentPage);
       }
     });
 
     document.getElementById('nextPage').addEventListener('click', () => {
       currentPage++;
-      fetchLinks();
+      fetchLinks(currentPage);
     });
 
     // Clear form fields
@@ -153,7 +147,7 @@
     });
 
     // Fetch and display links on page load
-    fetchLinks();
+    fetchLinks(currentPage);
   </script>
 </body>
 </html>
